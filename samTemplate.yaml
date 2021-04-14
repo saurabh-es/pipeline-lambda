@@ -1,0 +1,24 @@
+--- 
+AWSTemplateFormatVersion: "2010–09–09"
+Transform: "AWS::Serverless-2016–10–31"
+Description: "PipelineLambda Deployment"
+Resources: 
+  PipelineLambda: 
+    Type: "AWS::Serverless::Function"
+    Properties: 
+      FunctionName: PipelineLambda
+      Handler: "com.sauvini.pipeline.handler.PipelineHandler::handleRequest"
+      Role: 'arn:aws:iam::***********:role/LambdaRole'
+      Runtime: java8
+      Timeout: 120
+      AutoPublishAlias: QA
+      CodeUri: target/pipeline-lambda.jar
+      Environment: 
+        Variables: 
+          demo: pipeline
+      Events: 
+        ApiEvent: 
+          Type: Api
+          Properties: 
+            Method: post
+            Path: /users

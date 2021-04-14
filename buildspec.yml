@@ -1,0 +1,15 @@
+version: 0.1
+phases:
+  install:
+    commands:
+      - echo "nothing to do in install phase"
+  pre_build:
+    commands:
+      - mvn install
+  build:
+    commands:
+      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket pipeline-builds --output-template-file outputSamTemplate.yaml
+artifacts:
+  files:
+    - samTemplate.yaml
+    - outputSamTemplate.yaml
